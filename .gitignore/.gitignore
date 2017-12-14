@@ -6,6 +6,7 @@
 # Ignore the default database.
 /db/*.sqlite3
 /db/*.javadb/
+*.png
 
 # Ignore all logfiles and tempfiles.
 /log/*
