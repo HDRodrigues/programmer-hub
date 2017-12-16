@@ -3,11 +3,17 @@ class PostsController < ApplicationController
 	before_action :set_post, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@user = current_user 
+		@user = current_user
 		@post = Post.new
-		posts = current_user.posts.map {|post| post}
-		current_user.all_following.each { |user| user.posts.each{|post| posts << post } }
-		@posts = posts.sort_by &:created_at
+		posts = @user.posts.map {|post| post}
+		@user.all_following.each { |user| user.posts.each{|post| posts << post } }
+		@posts = (posts.sort_by! { |post| post.created_at }).reverse
+		@posts = @posts.paginate(:page => (params[:page] || 1), :per_page => 10)
+
+		respond_to do |format|
+			format.html
+			format.js
+		end
 	end
 
 	def create
@@ -47,10 +53,10 @@ class PostsController < ApplicationController
 	private
 
 	def set_post
-	@post = Post.find(params[:id])
-		end
-
-		def post_params
-	params.require(:post).permit(:body).merge(user: current_user)
-		end
+		@post = Post.find(params[:id])
 	end
+
+	def post_params
+		params.require(:post).permit(:body).merge(user: current_user)
+	end
+end
