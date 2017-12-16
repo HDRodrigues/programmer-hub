@@ -9,7 +9,7 @@
 			</div>
 			<div class="col s3 m3 l3">
 				<b class="post-date"><%= post.created_at.strftime("%Hh%M") %></b>
-			</div>\
+			</div>
 			<% if current_user.id == post.user_id %>
 				<div class="col s1 m1 l1">
 					<%= link_to post_path(post), method: "delete" do %>

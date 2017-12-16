@@ -1,15 +1,18 @@
 nav{
-	background-color: #e86252;
-
 	.brand-logo{
-		margin-left: 10px;
-		.logo-title{
-			font-size: 20px;
-		}
+	  margin-left: 10px;
+	  .logo-title{
+		font-size: 20px;
+	  }
 	}
-
+  
 	.nav-image {
-		width: 50px;
-		margin-top: 8px;
+	  width: 50px;
+	  margin-top: 8px;
 	}
-	}
+  }
+  
+  .search-field {
+	margin-right: 400px;
+	width: 300px;
+  }
