@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 	before_action :set_post, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@user = current_user	
+		@user = current_user 
 		@post = Post.new
 		posts = @user.posts.map {|post| post}
 		@user.all_following.each { |user| user.posts.each{|post| posts << post } }
@@ -20,14 +20,15 @@ class PostsController < ApplicationController
 		@post = Post.new(post_params)
 
 		respond_to do |format|
-		if @post.save
-			format.json { render json: @post, status: :created }
-			format.html { redirect_to posts_path, notice: 'Post was successfully created.' }
-		else
-			format.json { render json: @post.errors, status: :unprocessable_entity }
-			format.html { redirect_to posts_path }
+			if @post.save
+				format.json { render json: @post, status: :created }
+				format.html { redirect_to posts_path, notice: 'Post was successfully created.' }
+				format.js { render :file => "/app/views/posts/show.js.erb" }
+					else
+				format.json { render json: @post.errors, status: :unprocessable_entity }
+				format.html { redirect_to posts_path }
+				end
 		end
-			end
 	end
 
 	def show
