@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  before_action :set_search
   
-  #Captura de evento no rails
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
 
@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
   
     def after_sign_up_path_for(current_user)
       posts_path
+    end
+    #para preencher o q que é usado no controller de user
+    def set_search
+      @q = User.ransack(params[:q])
     end
 
   private
